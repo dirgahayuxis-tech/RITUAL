@@ -1,0 +1,69 @@
+{
+  "entities": {
+    "Profile": {
+      "title": "User Profile",
+      "description": "Public and private information about a user/mentor.",
+      "type": "object",
+      "properties": {
+        "full_name": { "type": "string" },
+        "bio": { "type": "string" },
+        "whatsapp_no": { "type": "string" },
+        "portfolio_links": { "type": "object" },
+        "image_url": { "type": "string" },
+        "is_verified": { "type": "boolean" },
+        "email": { "type": "string" },
+        "created_at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["full_name", "email"]
+    },
+    "Course": {
+      "title": "Course Listing",
+      "description": "A course or private lesson offered by a mentor.",
+      "type": "object",
+      "properties": {
+        "mentor_id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "category": { "type": "string" },
+        "price": { "type": "number" },
+        "type": { "type": "string", "enum": ["online", "offline"] },
+        "location_city": { "type": "string" },
+        "image_url": { "type": "string" },
+        "is_active": { "type": "boolean" },
+        "rating": { "type": "number" },
+        "review_count": { "type": "number" },
+        "created_at": { "type": "string", "format": "date-time" },
+        "updated_at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["mentor_id", "title", "category", "price", "type"]
+    },
+    "Review": {
+      "title": "Course Review",
+      "description": "User feedback for a course.",
+      "type": "object",
+      "properties": {
+        "course_id": { "type": "string" },
+        "user_id": { "type": "string" },
+        "user_name": { "type": "string" },
+        "rating": { "type": "number" },
+        "comment": { "type": "string" },
+        "created_at": { "type": "string", "format": "date-time" }
+      },
+      "required": ["course_id", "user_name", "rating"]
+    }
+  },
+  "firestore": {
+    "/profiles/{userId}": {
+      "schema": "Profile",
+      "description": "Stores user profiles linked to their Auth UID."
+    },
+    "/courses/{courseId}": {
+      "schema": "Course",
+      "description": "Global collection of all courses."
+    },
+    "/courses/{courseId}/reviews/{reviewId}": {
+      "schema": "Review",
+      "description": "Reviews for a specific course."
+    }
+  }
+}
